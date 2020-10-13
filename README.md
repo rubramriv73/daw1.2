@@ -3,6 +3,6 @@
 
 * Asignaturas que curso
 
-    -Programación(1ºDAW)
-    -Despliegue de aplicaciones web(2ºDAW)
+    - Programación(1ºDAW)
+    - Despliegue de aplicaciones web(2ºDAW)
 
