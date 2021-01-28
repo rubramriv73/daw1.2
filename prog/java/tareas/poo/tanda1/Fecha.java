@@ -31,7 +31,7 @@ package tanda1;
  * @author Rubén Ramírez Rivera
  *
  */
-public class Fecha {
+public class Fecha implements Comparable<Fecha> {
   
   // Declare a constant array with the name of the months
   final static String [] MONTHS = {"January" , "February", "March" , "April" , "May"
@@ -212,22 +212,19 @@ public class Fecha {
     return (this.year % 4 == 0 && (this.year % 100 != 0 || this.year % 400 == 0));
     
   }
-  
+
   /*
-   * Recibe dos fechas y devuelve un valor negativo si la 1ª es anterior a la
+   * Recibe una fecha y devuelve un valor negativo si la 1ª es anterior a la
    * segunda, cero si son iguales, y un valor positivo si la 1ª es posterior a 
    * la segunda.
    * 
-   * @param date1 A date to compare
-   * @param date2 Another date to compare
-   * @return
+   * @param date A date to compare
+   * @return Negative if date is after this date Positive if date is before this date and
+   *         0 if both are the same dates
    */
-  public int compareDates(Fecha date) {
-    String date1 = "" + this.day + this.month + this.year;
-    String date2 = "" + date.day + date.month + date.year;
-    
-    return date1.compareTo(date2);
-    
+  @Override
+  public int compareTo(Fecha date) {
+    return (this.day + this.month * 100 + this.year * 1000) - (date.day + date.month * 100 + date.year * 1000);
   }
   
   /*
@@ -272,6 +269,6 @@ public class Fecha {
     return days[this.month - 1];
     
   }
-  
+
   
 }

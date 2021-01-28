@@ -67,11 +67,26 @@ public class MainFecha {
     Fecha f1 = new Fecha(20,1,2016);
     Fecha f2 = new Fecha(20,1,2016);
     Fecha f3 = new Fecha(21,1,2016);
-    System.out.println("El resultado de comparar '" + f1 + "' con '" + f2
-                        + "' es " + f1.compareDates(f2));
-    System.out.println("El resultado de comparar '" + f1 + "' con '" + f3
-                        + "' es " + f1.compareDates(f3));
-                       
+    if (f1.compareTo(f2) < 0) {
+      System.out.println(f1 + " happened earlier than " + f2);
+      
+    } else if (f1.compareTo(f2) > 0) {
+      System.out.println(f2 + " happened earlier than " + f1);
+      
+    } else {
+      System.out.println(f1 + " and " + f2 + " are the same date");
+      
+    }
+    
+    if (f1.compareTo(f3) < 0) {
+      System.out.println(f1 + " happened earlier than " + f3);
+      
+    } else if (f1.compareTo(f3) > 0) {
+      System.out.println(f3 + " happened earlier than " + f1);
+      
+    } else {
+      System.out.println(f1 + " and " + f3 + " are the same date");
+    }
   }
   
 }
