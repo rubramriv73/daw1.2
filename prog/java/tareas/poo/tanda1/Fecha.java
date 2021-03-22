@@ -1,37 +1,38 @@
 package tanda1;
 
 /** 
- * Colección de funciones para manejar fechas en cadenas de caracteres.
- *
- * El formato de la cadena es: AAAAMMDD.
- * Ejemplo: El 15 de diciembre de 2019 sería: "20191215"
+ * 3. Crea una clase Fecha. Los objetos de la clase Fecha son fechas de tiempo 
+ * y se crean de la forma:
  * 
- * Colección de funciones:
+ * Fecha f = Fecha(1, 10, 2020);
  * 
- * 1. fechaCorrecta: dice si la fecha que se pasa como parámetro es correcta.
+ * donde los parámetros que se le pasan al constructor son el día, el mes y el 
+ * año respectivamente. Si la fecha creada es incorrecta mostraremos un mensaje 
+ * de error en la salida estándar de errores (lo ideal sería lanzar una excepción, 
+ * ya lo haremos cuando se vea en clase).
  * 
- * 2. fechaMas1Dia: suma un día a la fecha que se pasa como parámetro y lo devuelve.
+ * Crea métodos para:
  * 
- * 3. fechaMasNDias: suma una serie de días a la fecha que se pasa como parámetro y lo devuelve.
+ * Saber si la fecha almacenada es correcta.
+ * Sumar y restar días a la fecha. 
+ * Comparar la fecha almacenada con otra, el método devolverá un valor negativo si 
+ * la fecha almacenada es ANTERIOR a la otra, 0 si son IGUALES y un valor positivo 
+ * si es POSTERIOR.
+ * Saber si el año de la fecha almacenada es bisiesto.
+ * El método toString() devuelve una cadena con el formato "<día del mes> de <nombre 
+ * del mes> de <año>".
  * 
- * 4. fechaMenos1Dia: resta un día a la fecha que se pasa como parámetro y lo devuelve.
+ * Las opciones a partir de la segunda, solo se realizarán si la fecha almacenada es correcta, 
+ * en caso de no serlo, se dará un aviso, por la salida estándar de errores, de que la operación 
+ * no se puede realizar.
  * 
- * 5. fechaMenosNDias: resta una serie de días a la fecha que se pasa como parámetro y lo devuelve.
- * 
- * 6. esBisiesto: dice si la fecha que se pasa como parámetro es bisiesto.
- * 
- * 7. comparaFechas: recibe dos fechas y devuelve un valor negativo si la 1ª es anterior a la
- *    segunda, cero si son iguales, y un valor positivo si la 1ª es posterior a la segunda.
- * 
- * 8. fechaFormateada: recibe un fecha y devuelve una cadena con el formato:
- *    DD de {MES} de AAAA     (Ejemplo: "15 de Diciembre de 2019")
- *     
- * 9. anyo, mes, dia, nombreMes: recibe un fecha y devuelve esos valores.
+ * Puedes usar una variable de clase para almacenar el número de días de cada mes del año (que 
+ * no sea bisiesto).
  * 
  * @author Rubén Ramírez Rivera
  *
  */
-public class Fecha implements Comparable<Fecha> {
+public class Fecha{
   
   // Declare a constant array with the name of the months
   final static String [] MONTHS = {"January" , "February", "March" , "April" , "May"
@@ -54,6 +55,11 @@ public class Fecha implements Comparable<Fecha> {
     this.day = day;
     this.month = month;
     this.year = year;
+    
+    if(!this.fechaCorrecta()) {
+      System.err.println("¡Incorrect Date!");
+      return;
+    }
   }
   
   // Getter & Setters
@@ -69,6 +75,10 @@ public class Fecha implements Comparable<Fecha> {
    */
   public void setDay(int day) {
     this.day = day;
+    if (!this.fechaCorrecta()) {
+      System.err.println("¡Incorrect Date!");
+      return;
+    }
   }
 
   /**
@@ -83,6 +93,10 @@ public class Fecha implements Comparable<Fecha> {
    */
   public void setMonth(int month) {
     this.month = month;
+    if (!this.fechaCorrecta()) {
+      System.err.println("¡Incorrect Date!");
+      return;
+    }
   }
 
   /**
@@ -97,6 +111,10 @@ public class Fecha implements Comparable<Fecha> {
    */
   public void setYear(int year) {
     this.year = year;
+    if (!this.fechaCorrecta()) {
+      System.err.println("¡Incorrect Date!");
+      return;
+    }
   }
 
   // Methods
@@ -111,18 +129,18 @@ public class Fecha implements Comparable<Fecha> {
    * or not
    * @return
    */
-  public boolean fechaCorrecta() {  
+  public boolean fechaCorrecta() {
+    if (this.year == 0) {
+      return false;
+      
+    }
     if (this.month < 1 || this.month > 12) {
       return false;
         
     } 
     
-    if (this.day < 1 || this.day > this.daysMonth()){
-      return false;
+    return (this.day < 1 || this.day > daysMonth(this.month,this.year));
       
-    }
-    
-    return true;
   }
  
 
@@ -133,7 +151,7 @@ public class Fecha implements Comparable<Fecha> {
    * @return
    */
   public void fechaMas1Dia() {    
-    if ((this.day + 1) > this.daysMonth()) {
+    if ((this.day + 1) > daysMonth(this.month, this.year)) {
       this.day = 1;
       this.month += 1;
       
@@ -179,7 +197,7 @@ public class Fecha implements Comparable<Fecha> {
         this.day = 31;
         
       }
-      this.day = daysMonth();
+      this.day = daysMonth(this.month, this.year);
       
     } 
     
@@ -207,9 +225,9 @@ public class Fecha implements Comparable<Fecha> {
    * leap or not
    * @return
    */
-  public boolean isLeap() {
+  public static boolean isLeap(int year) {
     
-    return (this.year % 4 == 0 && (this.year % 100 != 0 || this.year % 400 == 0));
+    return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
     
   }
 
@@ -222,8 +240,8 @@ public class Fecha implements Comparable<Fecha> {
    * @return Negative if date is after this date Positive if date is before this date and
    *         0 if both are the same dates
    */
-  @Override
-  public int compareTo(Fecha date) {
+  
+  public int compareDate(Fecha date) {
     return (this.day + this.month * 100 + this.year * 1000) - (date.day + date.month * 100 + date.year * 1000);
   }
   
@@ -236,7 +254,7 @@ public class Fecha implements Comparable<Fecha> {
    */
   public  String toString() {
     
-    return nameMonth() + " the " + this.day + " of " + this.year; 
+    return nameMonth(this.month) + " the " + this.day + " of " + this.year; 
   }
   
   /*
@@ -245,9 +263,9 @@ public class Fecha implements Comparable<Fecha> {
    * @param date date the user wants to obtain the year
    * @return name of the month
    */
-  public String nameMonth() {
+  public static String nameMonth(int month) {
     
-    return MONTHS[this.month - 1];
+    return MONTHS[month - 1];
     
   }
   
@@ -257,16 +275,16 @@ public class Fecha implements Comparable<Fecha> {
    * @param date user's date
    * @return day of the month from the user's date
    */
-  public int daysMonth() {
+  public static int daysMonth(int m , int y) {
     
     int [] days = { 31 , 28 , 31 , 30 , 31 , 30 , 31 , 31 , 30 , 31 , 30 , 31 };
     
-    if (isLeap()) {
+    if (isLeap(y)) {
       days[1]++;
       
     } 
     
-    return days[this.month - 1];
+    return days[m - 1];
     
   }
 

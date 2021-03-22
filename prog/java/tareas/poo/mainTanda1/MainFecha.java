@@ -3,7 +3,35 @@ package mainTanda1;
 import java.util.Scanner;
 import tanda1.Fecha;
 
-/**
+/** 
+ * 3. Crea una clase Fecha. Los objetos de la clase Fecha son fechas de tiempo 
+ * y se crean de la forma:
+ * 
+ * Fecha f = Fecha(1, 10, 2020);
+ * 
+ * donde los parámetros que se le pasan al constructor son el día, el mes y el 
+ * año respectivamente. Si la fecha creada es incorrecta mostraremos un mensaje 
+ * de error en la salida estándar de errores (lo ideal sería lanzar una excepción, 
+ * ya lo haremos cuando se vea en clase).
+ * 
+ * Crea métodos para:
+ * 
+ * Saber si la fecha almacenada es correcta.
+ * Sumar y restar días a la fecha. 
+ * Comparar la fecha almacenada con otra, el método devolverá un valor negativo si 
+ * la fecha almacenada es ANTERIOR a la otra, 0 si son IGUALES y un valor positivo 
+ * si es POSTERIOR.
+ * Saber si el año de la fecha almacenada es bisiesto.
+ * El método toString() devuelve una cadena con el formato "<día del mes> de <nombre 
+ * del mes> de <año>".
+ * 
+ * Las opciones a partir de la segunda, solo se realizarán si la fecha almacenada es correcta, 
+ * en caso de no serlo, se dará un aviso, por la salida estándar de errores, de que la operación 
+ * no se puede realizar.
+ * 
+ * Puedes usar una variable de clase para almacenar el número de días de cada mes del año (que 
+ * no sea bisiesto).
+ * 
  * @author Rubén Ramírez Rivera
  *
  */
@@ -67,10 +95,10 @@ public class MainFecha {
     Fecha f1 = new Fecha(20,1,2016);
     Fecha f2 = new Fecha(20,1,2016);
     Fecha f3 = new Fecha(21,1,2016);
-    if (f1.compareTo(f2) < 0) {
+    if (f1.compareDate(f2) < 0) {
       System.out.println(f1 + " happened earlier than " + f2);
       
-    } else if (f1.compareTo(f2) > 0) {
+    } else if (f1.compareDate(f2) > 0) {
       System.out.println(f2 + " happened earlier than " + f1);
       
     } else {
@@ -78,10 +106,10 @@ public class MainFecha {
       
     }
     
-    if (f1.compareTo(f3) < 0) {
+    if (f1.compareDate(f3) < 0) {
       System.out.println(f1 + " happened earlier than " + f3);
       
-    } else if (f1.compareTo(f3) > 0) {
+    } else if (f1.compareDate(f3) > 0) {
       System.out.println(f3 + " happened earlier than " + f1);
       
     } else {
